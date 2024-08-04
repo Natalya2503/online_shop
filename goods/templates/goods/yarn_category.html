@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% load goods_tags %}
+
+
+{% block content %}
+<main class="main">
+       
+    <section class="catalog px-lg-3">
+       <div class="container-fluid">
+           <div class="row mb-5">
+               <div class="col-12">
+                   <h2 class="section-title">
+                       <span>Пряжа</span>
+                   </h2>
+               </div>
+           </div>
+       </div>
+        
+       <div class="container-fluid ">
+           <div class="row mb-5 p-3 category">
+               <div class="col-12">
+                   <ul class="nav nav-pills">
+                       <li class="nav-item ">
+                         <a class="nav-link active bg-danger " aria-current="page" href="{% url 'catalog:first_product'%}">Все производители</a>
+                       </li>
+                       {% tag_categories as categories %}
+                      {% for category in categories %}
+                      
+                      <li class="nav-item">
+                        <a class="nav-link text-danger" href="{% url 'catalog:first_category' category_id=category.id%}">{{ category.name }}</a>
+                      </li>
+                      {% endfor %}
+                      
+                      
+                     </ul>
+               </div>
+           </div>
+       </div>
+
+       <div class="row">
+      
+       {% for product in first_products %}
+       
+       <div class=" col-lg-3 col-md-4 col-sm-6 mb-3">
+      
+           <div class="product-card">
+               <div class="product-photo">
+                   <a href="#"><img src="{{ product.image.url }}" alt=""></a>
+               </div>
+               <div class="product-details  ">
+                   <h4>
+                       <a href="{% url 'catalog:product_details' product.id %}">{{ product.name }}</a>
+                   </h4>
+               
+                   <div class="product-excerpt " style="height: 250px">
+
+                       <p><b>Длина нити в мотке(метров):  </b> {{product.length }} метр</p>
+                       <p><b>Вес мотка:</b> {{ product.weight}} гр</p>
+                       <p><b>Состав:</b> {{ product.compound}} </p>
+                       <p><b>Родина модели:</b> {{ product.country }}</p>
+                     
+                   </div>
+                    
+               </div>
+             
+               <div class="product-price  mx-3">
+                   <div class="price">
+
+                      {{ product.price }} руб
+                   </div>
+    
+
+                   
+               </div>
+               
+              
+           </div>
+      
+            
+       </div>
+       {% endfor %}
+
+       
+         
+    
+   
+
+
+
+
+
+
+
+           
+
+       </div>
+
+    </section>
+</main>
+
+{% endblock  %}

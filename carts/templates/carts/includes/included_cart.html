@@ -1,0 +1,103 @@
+{% load static %}
+
+
+<main class="main" id="cart-items-container">
+    <div class="container-fluid">
+        <div class="row mt-5 mb-3 p-3">
+            <div class="col-12">
+                <h2 class="section-title">
+                    <span>Ваша корзина</span>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-md-10 offset-md-1 mb-3">
+                    <div class="cart-content p-3 h-100 bg-white">
+                     
+                        <div class="table-responsive" >
+                            <table class="table align-middle"   >
+                              {% for cart in carts %}
+                    
+                               <tbody>
+                                    <tr>
+                                    
+                                        <td class="product-img">
+                                            <a href="#">
+                                                {% if cart.products %}
+                                                    <img src="{{ cart.products.img.url }}" alt="">
+                                                {% elif cart.yarn %}
+                                                    <img src="{{ cart.yarn.img.url }}" alt="">
+                                                {% elif cart.adaptations %}
+                                                    <img src="{{ cart.adaptations.img.url }}" alt="">
+                                                {% endif %}
+                                            </a>
+                                          
+                                        </td>
+                                        <td>
+                                            <a href="#" class="cart-content-title">
+                                                {% if cart.products %}
+                                                    {{ cart.products.name }}
+                                                {% elif cart.yarn %}
+                                                    {{ cart.yarn.name }}
+                                                {% elif cart.adaptations %}
+                                                    {{ cart.adaptations.name }}
+                                                {% endif %}
+                                            </a>
+                                          
+                                        </td>
+                                         <td class="cart-price">
+                    
+                                            {% if cart.products %}
+                                             {{ cart.products.price }} руб
+                                            {% elif cart.yarn %}
+                                             {{ cart.yarn.price }} руб
+                                            {% elif cart.adaptations %}
+                                            {{ cart.adaptations.price }} руб
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                           x <input type="number" value="{{ cart.quantity }}" min='1' class=" cart-qty"> = 
+                                        </td>
+                                        <td class="cart-price">{{ cart.products_price }} руб </td>
+                                        <td class="product-bin">
+                                            <a href="{% url "cart:cart_remove"  %}" class="remove-from-cart" data-cart-id="{{ cart.id }}">
+                                                {% csrf_token %}
+                                                <img src="{% static 'files/images/корзина-мусор.png'%}" alt="">
+                                            </a>
+                                        </td>
+                                      
+                                    </tr>
+                                  
+                                </tbody>
+                                     {% endfor %}
+                               
+                             
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2">
+                                            {% if  carts %}
+                                            
+                                            <a href="#" class="btn btn-danger">Оформить заказ</a>
+                                            {% endif %}
+                                           
+                                        </td>
+                                        <td colspan="3" class="cart-price">
+                                          {{ carts.total_quantity }} товар(а) на сумму: {{carts.total_price }} руб
+                                        </td>
+                                      
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        
+                    
+                    </div>    
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+
+
