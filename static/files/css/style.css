@@ -283,6 +283,6 @@ footer a:hover{
 .cart-price{
     font-weight: bold;
 }
-.cart-qty{
-    width: 70px;
+.input-group{
+    width: 150px;
 }

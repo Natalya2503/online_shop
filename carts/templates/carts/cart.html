@@ -29,11 +29,11 @@
                                         <td class="product-img">
                                             <a href="#">
                                                 {% if cart.products %}
-                                                    <img src="{{ cart.products.img.url }}" alt="">
+                                                    <img src="{{ cart.products.image.url }}" alt="">
                                                 {% elif cart.yarn %}
-                                                    <img src="{{ cart.yarn.img.url }}" alt="">
+                                                    <img src="{{ cart.yarn.image.url }}" alt="">
                                                 {% elif cart.adaptations %}
-                                                    <img src="{{ cart.adaptations.img.url }}" alt="">
+                                                    <img src="{{ cart.adaptations.image.url }}" alt="">
                                                 {% endif %}
                                             </a>
                                           
@@ -60,10 +60,27 @@
                                             {{ cart.adaptations.price }} руб
                                             {% endif %}
                                         </td>
-                                        <td>
-                                           x <input type="number" value="{{ cart.quantity }}" min='1' class=" cart-qty"> = 
+                                        <td >
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark btn-sm decrement"
+                                                        data-cart-id="{{ cart.id }}" data-cart-change-url="{% url "cart:cart_change" %}"
+                                                       >
+                                                      {% csrf_token %}
+                                                        -</button>
+                                                </span>
+                                                <input type="text" class="form-control number" value="{{ cart.quantity }}"
+                                                    readonly>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-dark btn-sm increment"
+                                                        data-cart-id="{{ cart.id }}" data-cart-chage-url="{% url "cart:cart_change" %}"
+                                                       >
+                                                     {% csrf_token %}
+                                                        +</button>
+                                                </span>
+                                            </div>
                                         </td>
-                                        <td class="cart-price">{{ cart.products_price }} руб </td>
+                                        <td class="cart-price"> = {{ cart.products_price }} руб </td>
                                         <td class="product-bin">
                                             <a href="{% url "cart:cart_remove"  %}" class="remove-from-cart" data-cart-id="{{ cart.id }}">
                                                 {% csrf_token %}
