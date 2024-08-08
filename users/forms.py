@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth import get_user_model
 
 
@@ -22,7 +22,7 @@ class LoginUserForm(AuthenticationForm):
         model = get_user_model()
         fields = ['username', 'password']
     
-
+# ----------------------------------------------------
                                          
 class RegisterUserForm(UserCreationForm):
    
@@ -87,6 +87,48 @@ class RegisterUserForm(UserCreationForm):
         fields = ['username', 'last_name', 'email', 'phone_number', 'password1', 'password2'] 
 
 
-                                     
+#  ------------------------------------------------    
+
+class ProfileForm(UserChangeForm):
+    
+    username = forms.CharField(
+        disabled=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Введите ваше имя",
+            }
+        )
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Введите вашу фамилию",
+            }
+        )
+    )
+    phone_number = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Номер телефона",
+            }
+        )
+    )
+    email = forms.CharField(
+        disabled=True,
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Введите ваш email *youremail@example.com",
+                
+            }
+        ),
+    )
+
+    class Meta:
+        model = get_user_model() 
+        fields = ['username', 'last_name', 'phone_number', 'email']                              
    
     
