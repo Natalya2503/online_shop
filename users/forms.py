@@ -31,16 +31,16 @@ class RegisterUserForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "placeholder": "Введите ваше имя пользователя",
+                "placeholder": "Введите ваше имя ",
             }
         )
     )
-    first_name = forms.CharField(
+    last_name = forms.CharField(
         label = 'Имя',
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "placeholder": "Введите ваше имя ",
+                "placeholder": "Введите вашу фамилию ",
             }
         )
     )
@@ -84,7 +84,7 @@ class RegisterUserForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'first_name', 'email', 'phone_number', 'password1', 'password2'] 
+        fields = ['username', 'last_name', 'email', 'phone_number', 'password1', 'password2'] 
 
 
                                      

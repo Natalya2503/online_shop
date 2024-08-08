@@ -33,6 +33,17 @@ def cart_add(request):
         if not created:
             cart.quantity += 1
             cart.save()
+    else:
+        cart = Cart.objects.filter(session_key=request.session.session_key, **{product_field: product})
+        if cart.exists():
+            cart_instance = cart.first()
+            cart_instance.quantity += 1
+            cart_instance.save()
+        else:
+            Cart.objects.create(session_key=request.session.session_key, **{product_field: product}, quantity=1)
+ 
+                
+        
     
     user_cart = get_user_carts(request)
     

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
- {% load carts_tags %}
+{% load carts_tags %}
 
 {% user_carts request as carts%}  
 
@@ -99,7 +99,7 @@
                                         <td colspan="2">
                                             {% if  carts %}
                                             
-                                            <a href="#" class="btn btn-danger">Оформить заказ</a>
+                                            <a href="{% url "orders:create_order" %}" class="btn btn-danger">Заказать</a>
                                             {% endif %}
                                            
                                         </td>

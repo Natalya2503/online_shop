@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'goods.apps.GoodsConfig',
     'users.apps.UsersConfig',
     'carts.apps.CartsConfig',
+    'orders.apps.OrdersConfig',
+   
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,5 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'main:index'
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = 'main:index'
+
+

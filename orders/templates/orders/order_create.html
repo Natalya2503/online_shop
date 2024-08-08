@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %} 
+{% load carts_tags %}
+{% user_carts request as carts%} 
+
+{% block content %}
+<main class="main">
+    <div class="container-fluid">
+        <div class="row mt-5 mb-3 p-3">
+            <div class="col-12">
+                <h2 class="section-title">
+                    <span>Оформление заказа</span>
+                </h2>
+            </div>
+            <div class="row">
+                <div class="col-md-10 offset-md-1 mb-3 mt-4">
+                    <h4 class="title text-center">
+                        Выбранные товары
+                    </h4>
+                    <div class="cart-content p-3 h-100 bg-white">
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                {% for cart in carts  %}
+                                
+                                <tbody>
+                                    <tr>
+
+                                        <tr>
+
+                                            <td class="product-img">
+                                                <a href="#">
+                                                    {% if cart.products %}
+                                                        <img src="{{ cart.products.image.url }}" alt="">
+                                                    {% elif cart.yarn %}
+                                                        <img src="{{ cart.yarn.image.url }}" alt="">
+                                                    {% elif cart.adaptations %}
+                                                        <img src="{{ cart.adaptations.image.url }}" alt="">
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#" class="cart-content-title">
+                                                    {% if cart.products %}
+                                                        {{ cart.products.name }}
+                                                    {% elif cart.yarn %}
+                                                        {{ cart.yarn.name }}
+                                                    {% elif cart.adaptations %}
+                                                        {{ cart.adaptations.name }}
+                                                    {% endif %}
+                                                </a>
+                                            </td>
+                                            <td class="cart-price"> 
+                                                
+                                            {% if cart.products %}
+                                            {{ cart.products.price }} руб
+                                           {% elif cart.yarn %}
+                                            {{ cart.yarn.price }} руб
+                                           {% elif cart.adaptations %}
+                                           {{ cart.adaptations.price }} руб
+                                           {% endif %}
+                                            </td>
+                                            <td>
+                                               x   {{cart.quantity}}
+                                               
+                                             </td>
+                                           
+                                            
+                                            <td class="product-bin">
+                                                <td class="cart-price"> = {{ cart.products_price }} руб</td> 
+                                            </td>
+                                        </tr>   
+                                         
+                                      
+                                      
+                                    </tr>
+                                   
+                                   
+                                </tbody>
+                                {% endfor %}
+
+                                <tfoot>
+                                    <tr>
+                                      
+                                        <td colspan="2"></td>
+                                          
+
+                                        <td colspan="3" class="cart-price">
+                                            {{ carts.total_quantity }}  товар(а) на сумму: {{carts.total_price }} руб
+                                        </td>
+                                      
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+             <div class="row">
+                   <h4 class="title text-center mb-5">
+                             Детали заказа
+                         </h4> 
+                 <div class="col-md-8 offset-md-2">
+
+                      <form action="{% url "orders:create_order" %}" method="post" class="row g-3">
+                        {% csrf_token %} 
+             
+                            <div class="col-md-6">
+                              <label for="id_username" class="form-label">Имя</label>
+                              <input type="text" class="form-control" id="id_username" name="username">
+                            </div>
+                 
+                            <div class="col-md-6">
+                              <label for="id_last_name" class="form-label">Фамилия</label>
+                              <input type="text" class="form-control" id="id_last_name" name="last_name">
+                            </div>
+                    
+
+                            
+                            <div class="col-md-6">
+                              <label for="id_phone_number" class="form-label">Телефон</label>
+                              <input type="tel" class="form-control" id="id_phone_number" name="phone_number">
+                            </div>
+                        
+                            <div class="col-md-6">
+                                <label for="id_email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="id_email" name="email">
+                              </div>
+                           
+                              <div class="col-md-12 mb-3">
+                                <label for="delivery" class="form-label">Способ доставки: </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="requires_delivery"
+                                        id="id_requires_delivery" value="1" checked>
+                                    <label class="form-check-label" for="id_requires_delivery">Нужна
+                                        доставка</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="requires_delivery"
+                                        id="id_requires_delivery" value="0">
+                                    <label class="form-check-label" for="id_requires_delivery">Самовывоз</label>
+                                </div>
+                            </div>
+                            <div class="mb-3" id="deliveryAddressField">
+                                <label for="id_delivery_address" class="form-label">Адрес
+                                    доставки:</label>
+                                <textarea class="form-control" id="id_delivery_address"
+                                    name="delivery_address" rows="2"></textarea>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Способ оплаты: </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payment_on_get"
+                                        id="id_payment_on_get" value="0" checked>
+                                    <label class="form-check-label" for="id_payment_on_get">Оплата
+                                        картой</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payment_on_get"
+                                        id="id_payment_on_get" value="1">
+                                    <label class="form-check-label" for="id_payment_on_get">Наличными/картой
+                                        при получении</label>
+                                </div>
+                            </div> 
+                            <div class="col-12">
+                              <button type="submit" class="btn btn-danger">Оформить заказ</button>
+                            </div>
+                          </form>                                                     
+                                              
+                 </div>
+             </div>
+                  
+
+                
+                    
+                      
+
+                       
+                    
+                  
+                
+            </div>
+
+        </div>
+
+    </div>
+</main>
+{% endblock  %}
+
+
