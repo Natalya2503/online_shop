@@ -1,16 +1,6 @@
 from django.db import models
 
-class Categories(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Название')
-    slug = models.SlugField(max_length=200, blank=True, null=True, verbose_name='URL')
 
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        db_table = 'category'
-        verbose_name = 'Категорию товара'
-        verbose_name_plural = 'Категории товара'
     
 
 class Products(models.Model):
@@ -20,7 +10,7 @@ class Products(models.Model):
     image = models.ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Изображение')
     price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2, verbose_name='Цена')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
-    category = models.ForeignKey(to=Categories, on_delete=models.PROTECT, verbose_name='Категория' )
+
    
 
     
@@ -43,6 +33,7 @@ class YarnCategories(models.Model):
         db_table = 'yarncategory'
         verbose_name = 'Категорию пряжи'
         verbose_name_plural = 'Категории пряжи'
+        ordering = ("id",)
 
 class YarnSubCategories(models.Model):
     name = models.CharField(max_length=200, verbose_name='Подкатегория пряжи')
@@ -55,6 +46,7 @@ class YarnSubCategories(models.Model):
         db_table = 'yarnsubcategory'
         verbose_name = 'Подкатегорию пряжи'
         verbose_name_plural = 'Подкатегории пряжи'
+        ordering = ("id",)
     
 
     
@@ -81,8 +73,19 @@ class Yarn(models.Model):
         db_table = 'yarn'
         verbose_name = 'Пряжа'
         verbose_name_plural = 'Пряжа'
+        ordering = ("id",)
 
+class CategoriesAdaptations(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Название')
+    slug = models.SlugField(max_length=200, blank=True, null=True, verbose_name='URL')
 
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        db_table = 'category'
+        verbose_name = 'Категорию приспособления'
+        verbose_name_plural = 'Категории приспособлений'
 
 
 class Adaptations(models.Model):
@@ -90,7 +93,7 @@ class Adaptations(models.Model):
     slug = models.SlugField(max_length=200, blank=True, null=True, verbose_name='URL')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
     image = models.ImageField(upload_to='goods_images', blank=True, null=True, verbose_name='Изображение')
-    price = models.DecimalField(default=0.00, max_digits=5, decimal_places=2, verbose_name='Цена')
+    price = models.DecimalField(default=0.00, max_digits=7, decimal_places=2, verbose_name='Цена')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
     compound = models.CharField(max_length=250, blank=True, null=True, verbose_name='Состав')
     equipment = models.TextField(blank=True, null=True, verbose_name='Комплектация')
@@ -99,7 +102,8 @@ class Adaptations(models.Model):
     size = models.CharField(max_length=300, blank=True, null=True, verbose_name='Диаметр спицы\крючка')
     manufacturer = models.CharField(max_length=250,blank=True, null=True, verbose_name='Производитель')
     country = models.CharField(max_length=250, blank=True, null=True, verbose_name='Страна')
-
+    category = models.ForeignKey(to=CategoriesAdaptations, on_delete=models.PROTECT, verbose_name='Категория' )
+    
     def __str__(self):
         return self.name
     

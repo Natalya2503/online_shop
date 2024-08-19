@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% load goods_tags %}
+
+{% block content %}
+<main class="main">
+       
+    <section class="catalog px-lg-3">
+       <div class="container-fluid">
+           <div class="row mb-5">
+               <div class="col-12">
+                   <h2 class="section-title">
+                       <span>Инструменты для вязания</span>
+                   </h2>
+               </div>
+           </div>
+       </div>
+        
+       <div class="container-fluid ">
+           <div class="row mb-5 p-3 category">
+               <div class="col-12">
+                   <ul class="nav nav-pills">
+                       <li class="nav-item ">
+                         <a class="nav-link active bg-danger " aria-current="page" href="{% url 'catalog:catalog_adapt'%}">Все товары</a>
+                       </li>
+                       {% tag_categories_adapt as categories %}
+                      
+                      {% for cat in categories %}
+                      
+                      <li class="nav-item">
+                        <a class="nav-link text-danger" href="{% url 'catalog:category_adapt' cat.id %}">{{ cat.name }}</a>
+                      </li>
+                      {% endfor %}
+                      
+                      
+                     </ul>
+               </div>
+           </div>
+       </div>
+
+       <div class="row">
+      
+       {% for adapt in adapts %}
+       
+       <div class=" col-lg-3 col-md-4 col-sm-6 mb-3">
+      
+           <div class="product-card">
+               <div class="product-photo">
+                   <a href="{% url "catalog:adapt_detail" adapt.id %}"><img src="{{ adapt.image.url }}" alt=""></a>
+               </div>
+               <div class="product-details  ">
+                   <h4>
+                       <a href="{% url 'catalog:adapt_detail' adapt.id %}">{{ adapt.name }}</a>
+                   </h4>
+               
+                   <div class="product-excerpt " style="height: 250px">
+
+                       <p><b>Состав:  </b> {{adapt.compound }}</p>
+                       <p><b>Комплектация:</b> {{ adapt.equipment}}</p>
+                       <p><b>Производитель:</b> {{ adapt.manufacturer}} </p>
+                       <p><b>Страна:</b> {{ adapt.country }}</p>
+                     
+                   </div>
+                    
+               </div>
+               <div class="product-price d-flex  align-content-center  mx-3">
+                <div class="price">
+
+                    {{ adapt.price }} руб
+                </div>
+
+               
+                 <div class="link ">
+
+                     <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{ adapt.id}}">
+                      {% csrf_token %}
+                           <img src="{% static 'files/images/корзина.png' %}" alt="" style="width:50px">
+                     </a>
+                      {% comment %} <a href="#">
+                         <img src="{% static 'files/images/сердце.png'%}" alt="">
+                     </a>  {% endcomment %}
+                 </div>
+
+                
+            </div>
+
+             
+               {% comment %} <div class="product-price  mx-3">
+                   <div class="price">
+
+                      {{ product.price }} руб
+                   </div>
+    
+
+                   
+               </div> {% endcomment %}
+               
+              
+           </div>
+      
+            
+       </div>
+      
+       {% endfor %}
+       
+    </div>
+
+ </section>
+
+</main>
+{% endblock  %}
+         
+    
+   
+
+
+
+
+
+
+
+           

@@ -7,7 +7,9 @@ from .forms import LoginUserForm, RegisterUserForm, ProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.urls import  reverse_lazy, reverse
+from django.db.models import Prefetch
 from carts.models import Cart
+from orders.models import Order, OrderItem
 
 
 
@@ -76,6 +78,14 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
         
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['orders'] = Order.objects.filter(user=self.request.user).prefetch_related(
+            Prefetch(
+                'orderitem_set',
+                queryset=OrderItem.objects.select_related('products', 'yarn', 'adaptations')
+            )
+        ).order_by('-id')
+        return context
 
 # def profile(request):
 #     if request.method == 'POST':

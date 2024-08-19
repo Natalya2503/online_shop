@@ -7,109 +7,7 @@ from orders.forms import CreateOrderForm
 from carts.models import Cart
 from orders.models import Order, OrderItem
 
-# @login_required
-# def create_order(request):
-#     if request.method == 'POST':
-#         form = CreateOrderForm(data=request.POST)
-#         if form.is_valid():
-#             try:
-#                 with transaction.atomic():
-#                     user = request.user
-#                     cart_items = Cart.objects.filter(user=user)
-
-#                     if cart_items.exists():
-#                         order = Order.objects.create(
-#                             user=user,
-#                             phone_number=form.cleaned_data['phone_number'],
-#                             requires_delivery=form.cleaned_data['requires_delivery'],
-#                             delivery_address=form.cleaned_data['delivery_address'],
-#                             payment_on_get=form.cleaned_data['payment_on_get']
-#                         )
-
-#                         for cart_item in cart_items:
-#                             product = cart_item.products
-
-#                             yarn = cart_item.yarn
-
-#                             adaptation = cart_item.adaptations
-
-#                             price = cart_item.products_price()
-
-#                             quantity = cart_item.quantity
-
-#                             if product is not None:
-
-#                                 if product.quantity < quantity:
-
-#                                      raise ValidationError(f'Недостаточное количество товара на складе. В наличии - {product.quantity}')
-
-#                             elif yarn is not None:
-
-#                                 if yarn.quantity < quantity:
-
-#                                      raise ValidationError(f'Недостаточное количество пряжи на складе. В наличии - {yarn.quantity}')
-
-#                             elif adaptation is not None:
-
-#                                 if adaptation.quantity < quantity:
-
-#                                      raise ValidationError(f'Недостаточное количество приспособлений на складе. В наличии - {adaptation.quantity}')
-
-#                             else:
-
-#                                raise ValidationError('Товар отсутствует в наличии.')
-                            
-#                             OrderItem.objects.create(
-#                                 order=order,
-
-#                                 products=product ,
-
-#                                 yarn=yarn ,
-
-#                                 adaptations=adaptation,
-
-#                                 price=price,
-
-#                                 quantity=quantity,
-
-#                             )
-
-#                             if product:
-
-#                                 product.quantity -= quantity
-
-#                                 product.save()
-
-#                             if yarn:
-
-#                                 yarn.quantity -= quantity
-
-#                                 yarn.save()
-
-#                             if adaptation:
-
-#                                 adaptation.quantity -= quantity
-
-#                                 adaptation.save()
-                        
-#                         cart_items.delete()
-
-#                         return redirect('main:index')
-            
-#             except ValidationError as e:
-#                 messages.error(request, str(e))
-#                 return redirect('orders:create_order')
-
-#     else:
-#         form = CreateOrderForm()  
-
-#     context = {
-#         'title': 'Оформление заказа',
-#         'form': form,
-#         'order': True
-#     }
-
-#     return render(request, 'orders/order_create.html', context)      
+      
 
 
 
@@ -128,7 +26,7 @@ def create_order(request):
 
         'title': 'Оформление заказа',
 
-        'form': CreateOrderForm(),  # Инициализировать форму до проверки POST
+        'form': CreateOrderForm(),  
 
         'order': True,
 

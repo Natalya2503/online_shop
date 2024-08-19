@@ -2,6 +2,7 @@
 {% load static %}
 
 
+
 {% block content %}
 <main class="main">
     <div class="container-fluid">
@@ -10,16 +11,16 @@
             
             <div class="col-md-5 col-lg-4 mb-3 mt-3">
                 <div class="photo">
-                    <img src="{{ product.image.url }}"  alt="">
+                    <img src="{{ adapt.image.url }}"  alt="">
                 </div>
             </div>
             <div class="col-md-7 col-lg-8 mb-3 mt-3 p-3 h-100">
 
                 <h2 class="section-title">
-                    <span>{{ product.name}}</span>
+                    <span>{{ adapt.name}}</span>
                 </h2>
                 <div class="product-price-details">
-                    {{ product.price}} руб
+                    {{ adapt.price}} руб
                 </div>
                 <div class="row mt-3">
                     <div class="col-12 ">
@@ -42,7 +43,7 @@
                                 <div class="tab-pane fade show active" id="description" role="tabpanel"
                                     aria-labelledby="description-tab">
                                     <p>
-                                        {{ product.description }}
+                                        {{ adapt.description }}
               
                                     </p>
                                 </div>
@@ -52,25 +53,35 @@
                                         
                                         <tbody>
                                           <tr>
-                                            <th scope="row">Длина нити в мотке (метров):</th>
-                                            <td>{{ product.length}} метров</td>	
+                                            <th scope="row">Состав:</th>
+                                            <td>{{ adapt.compound}}</td>	
                                             
                                           </tr>
                                           <tr>
-                                            <th scope="row">Вес мотка:</th>
-                                            <td>{{ product.weight }} гр</td>
+                                            <th scope="row">Комплектация:</th>
+                                            <td>{{ adapt.equipment }} </td>
                                         
                                           </tr>
                                           <tr>
-                                            <th scope="row">Состав:</th>
+                                            <th scope="row">Длина:</th>
                                            
-                                            <td>{{ product.compound}} </td>
+                                            <td>{{ adapt.length1}} </td>
                                           </tr>
                                           
                                           <tr>
-                                            <th scope="row">Родина модели:</th>
+                                            <th scope="row">Диаметр:</th>
                                            
-                                            <td>{{ product.country }} </td>
+                                            <td>{{ adapt.size }} </td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Производитель:</th>
+                                           
+                                            <td>{{ adapt.manufacturer }} </td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">Страна:</th>
+                                           
+                                            <td>{{ adapt.country }} </td>
                                           </tr>
 
                                         </tbody>
@@ -87,60 +98,9 @@
 
         </div>
     </div>
-    {% comment %} <section class="catalog px-lg-3 "> {% endcomment %}
-        <div class="container-fluid">
-            <div class="row mb-5">
-                <div class="col-12">
-                    <h2 class="section-title">
-                        <span>Карта цветов</span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-          {% for product in subcategory_product %}
-          
-          <div class=" col-lg-3 col-md-4 col-sm-6 mb-3">
-              <div class="product-card">
-                  <div class="product-photo">
-                      <a href="#"><img src="{{ product.image.url}}" alt=""></a>
-                  </div>
-                  <div class="product-details ">
-                      <h4 >
-                          {{ product.color}}
-                      </h4>
-                     
-                  </div>
-                
-                  <div class="product-price d-flex  align-content-center  mx-3">
-                      <div class="price">
+    
 
-                          {{ product.price }} руб
-                      </div>
-                       <div class="link ">
-
-                           <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{ product.id}}">
-                            {% csrf_token %}
-                                 <img src="{% static 'files/images/корзина.png' %}" alt="">
-                           </a>
-                            {% comment %} <a href="#">
-                               <img src="{% static 'files/images/сердце.png'%}" alt="">
-                           </a>  {% endcomment %}
-                       </div>
-
-                      
-                  </div>
-                  
-                 
-              </div>
-          </div>
-          {% endfor %}
-
-          
-
-        </div>
-
-     </section>
+     
 
 
 

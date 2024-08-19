@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="main">
+    <section class="catalog px-lg-3">
+       <div class="container-fluid">
+           <div class="row mb-5">
+               <div class="col-12">
+                   <h2 class="section-title">
+                       <span>Аксессуары для вязания</span>
+                   </h2>
+               </div>
+           </div>
+       </div>
+       <div class="row">
+        {% for item in products %}
+        
+        <div class=" col-lg-3 col-md-4 col-sm-6 mb-3">
+            <div class="product-card">
+                <div class="product-photo">
+                    <a href="{% url "catalog:product_sample" item.slug %}"><img src="{{ item.image.url }}" alt=""></a>
+                </div>
+                <div class="product-details  ">
+                    <h4>
+                        <a href="{% url "catalog:product_sample" item.slug %}">{{ item.name }}</a>
+                    </h4>
+                    <div class="product-excerpt">
+
+                        <p>{{ item.description|truncatechars:300}}</p>
+                       
+                      
+                    </div>
+                     
+                </div>
+              
+                <div class="product-price d-flex  align-content-center  mx-3">
+                    <div class="price">
+
+                       {{ item.price }} руб
+                    </div>
+                     <div class="link ">
+
+                        <a href="{% url "cart:cart_add" %}" class="add-to-cart" data-product-id="{{ item.id}}">
+                            {% csrf_token %}
+                                 <img src="{% static 'files/images/корзина.png' %}" alt="">
+                           </a>
+                     </div>
+
+                    
+                </div>
+                
+               
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+ </section>
+ <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not products.has_previous %}disabled{% endif %} ">
+        <a class="page-link" href="{% if products.has_previous %}
+         ?page = {{ products.previous_page_number}}
+        {% else %}
+        #
+        {% endif %}" tabindex="-1" aria-disabled="true">Назад</a>
+      </li>
+      {% for page  in products.paginator.page_range %}
+      {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
+      <li class="page-item {% if products.number == page %}active{% endif %}">
+        <a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+      {% endif %}
+      {% endfor %}
+
+      <li class="page-item {% if not products.has_next %}disabled{% endif %} ">
+        <a class="page-link" href="{% if products.has_next %}
+        ?page={{ products.next_page_number }}
+        {% else %}
+        #
+        {% endif %}" tabindex="-1" aria-disabled="true">Следующая</a>
+      </li>
+    </ul>
+  </nav>
+</main>
+          
+{% endblock  %}
+
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+         

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
    
 ]
 
@@ -141,5 +142,8 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = 'main:index'
 LOGIN_URL = 'users:login'
 LOGOUT_REDIRECT_URL = 'main:index'
+
+YOOKASSA_SHOP_ID = '436299'
+YOOKASSA_SECRET_KEY = 'test_nCqu7YHjOd2z2Wcjj4y1sUFyIcQZBijxO126l43UiqQ'
 
 

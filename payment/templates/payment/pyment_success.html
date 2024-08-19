@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h3>Ваш заказ успешно оплачен!</h3>
+    <p>Номер заказа: {{ order.id }}</p>
+    <p>Статус: {{ order.status }}</p>
+{% endblock  %}

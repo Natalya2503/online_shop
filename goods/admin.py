@@ -1,10 +1,10 @@
 from django.contrib import admin
-from goods.models import Categories, Products, Yarn, YarnCategories, Adaptations, YarnSubCategories
+from goods.models import CategoriesAdaptations, Products, Yarn, YarnCategories, Adaptations, YarnSubCategories
 
 admin.site.site_header = 'Панель администрирования'
 
 
-@admin.register(Categories)
+@admin.register(CategoriesAdaptations)
 class CategoriesAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
     ordering = ['id']
