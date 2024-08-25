@@ -76,37 +76,45 @@
                       {% csrf_token %}
                            <img src="{% static 'files/images/корзина.png' %}" alt="" style="width:50px">
                      </a>
-                      {% comment %} <a href="#">
-                         <img src="{% static 'files/images/сердце.png'%}" alt="">
-                     </a>  {% endcomment %}
+                    
                  </div>
 
                 
             </div>
 
-             
-               {% comment %} <div class="product-price  mx-3">
-                   <div class="price">
-
-                      {{ product.price }} руб
-                   </div>
-    
-
-                   
-               </div> {% endcomment %}
-               
-              
-           </div>
-      
+        </div>    
             
-       </div>
-      
-       {% endfor %}
     </div>
+   
+    {% endfor %}
+ </div>
 
- </section>
+</section>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if not adapts.has_previous %}disabled{% endif %} ">
+        <a class="page-link" href="{% if adapts.has_previous %}?{% change_params page=adapts.previous_page_number %}{% else %}#{% endif %}" tabindex="-1" aria-disabled="true">Назад</a>
+      </li>
+      {% for page  in adapts.paginator.page_range %}
+      {% if page >= adapts.number|add:-2 and page <= adapts.number|add:2 %}
+      <li class="page-item {% if adapts.number == page %}active{% endif %}">
+        <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a>
+    </li>
+      {% endif %}
+      {% endfor %}
+
+      <li class="page-item {% if not adapts.has_next %}disabled{% endif %} ">
+        <a class="page-link" href="{% if adapts.has_next %}?{% change_params page=adapts.next_page_number %}{% else %}# {% endif %}" tabindex="-1" aria-disabled="true">Следующая</a>
+      </li>
+    </ul>
+  </nav>
 </main>
 {% endblock  %}
+            
+            
+        
+        
+            
        
          
     

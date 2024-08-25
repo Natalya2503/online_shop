@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+from django.db.models import Q
+# from goods.utils import q_search
 
 from goods.models import Yarn,YarnCategories, Adaptations, Products
 
@@ -37,27 +39,31 @@ def first_product(request):
 def first_category(request, category_id):
     
     page = request.GET.get('page', 1)
+    # query = request.GET.get('q', None)
 
+    # category = None
+    first_products = []
 
+    # if query:
+    #     first_products = q_search(query)
+    # else:
+    #    if category_id:
+           
     category = get_object_or_404(YarnCategories, id=category_id)
     subcategories = category.subcategories.all()
-    first_products = []
+        #  first_products = []
     for subcategory in subcategories:
-        first_product = subcategory.products.first()
-        if first_product:
-            first_products.append(first_product)
+             first_product = subcategory.products.first()
+             if first_product:
+                first_products.append(first_product)
 
     paginator = Paginator(first_products, 4)
     current_page = paginator.page(int(page))
-    
-
-
-
     context = {
         'title':'Категория пряжи',
         'category': category,
         'first_products': current_page,
-        # 'id_url': category_id
+      
     }
     return render(request, 'goods/yarn_category.html', context)
 
@@ -75,10 +81,15 @@ def product_details(request, product_id):
 
 # ------------------adaptations-----------------------------
 def catalog_adapt(request):
+    page = request.GET.get('page', 1)
     adapts = Adaptations.objects.all()
+  
+    paginator = Paginator(adapts, 4)
+    current_page = paginator.page(int(page))
+
     context = {
         'title': 'Категории инструментов',
-        'adapts': adapts
+        'adapts': current_page
     }
     return render(request, 'goods/adapt.html', context)
 
@@ -94,19 +105,33 @@ def adapt_detail(request, adapt_id):
     
 
 def category_adapt(request, cat_id):
-     adapts = Adaptations.objects.filter(category__id=cat_id)
-     context = {
+    page = request.GET.get('page', 1)
+    #  query = request.GET.get('q', None)
+
+    #  if query:
+    #     adapts = q_search(query)
+    #  else:
+    adapts = Adaptations.objects.filter(category__id=cat_id)
+    
+    paginator = Paginator(adapts, 4)
+    current_page = paginator.page(int(page))
+    context = {
          'title': 'Категории инструментов',
-         'adapts': adapts,
+         'adapts': current_page
         
      }
-     return render(request, 'goods/cat_adapt.html', context)
+    return render(request, 'goods/cat_adapt.html', context)
 
 
 # -------------------products----------------------
 
 def products_catalog(request):
     page = request.GET.get('page', 1)
+    # query = request.GET.get('q')
+    
+    # if query:
+    #     products = q_search(query)
+    # else:
     products = Products.objects.all()
 
     paginator = Paginator(products, 4)
@@ -126,6 +151,49 @@ def product_sample(request, product_slug):
     }
     return render(request, 'goods/product_sample.html', context)
 
+# --------------------search-------------------------------
+
+def q_searсh(query):
+    keywords = [word for word in query.split() if len(word)>0]
+    
+    yarn_q_objects =Q()
+    adaptations_q_objects = Q()
+    products_q_objects = Q()
+
+    for token in keywords:
+        yarn_q_objects |= Q(description__icontains=token)
+        adaptations_q_objects |= Q(name__icontains=token) | Q(description__icontains=token)
+        products_q_objects |= Q(name__icontains=token) | Q(description__icontains=token)
+
+    yarn_results = Yarn.objects.filter(yarn_q_objects)
+    adaptations_results = Adaptations.objects.filter(adaptations_q_objects)
+    products_results = Products.objects.filter(products_q_objects)
+
+    return {
+        'yarn_results': yarn_results,
+        'adaptations_results': adaptations_results,
+        'products_results': products_results
+    }
+                
+def search(request):
+    query = request.GET.get('q', '') 
+    results = q_searсh(query) if query else {}
+
+    context = {
+        'title': 'Поиск',
+        'query': query,
+        'results': results
+    }
+    return render(request, 'goods/search.html', context)
+   
+        
+     
+
+        
+    
+
+ 
+      
 
 
 
@@ -159,10 +227,6 @@ def product_sample(request, product_slug):
 
 
 
-# def product(request, product_id):
-#     product = Products.objects.get(id=product_id)
-#     context = {
-#         'title': 'Товар',
-#         'product': product
-#     }
-#     return render(request, 'goods/product.html', context)
+
+
+

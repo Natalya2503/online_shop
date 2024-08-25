@@ -34,12 +34,12 @@
                     <div class="col-md-5  ">
                      
         
-                      <form action="">
+                      <form action="{% url "catalog:search" %}" method="get">
         
                         <div class="input-group mt-3 w-75" >
-                          <input type="text" class="form-control" placeholder="Searching..." aria-label="Searching..."
+                          <input type="search" class="form-control" name='q' placeholder="Searching..." aria-label="Searching..."
                             aria-describedby="button-addon2">
-                          <button class="btn btn-outline-danger" type="button" id="button-addon2">Поиск</button>
+                          <button class="btn btn-outline-danger" type="submit" id="button-addon2">Поиск</button>
                         </div>
                       </form>
         

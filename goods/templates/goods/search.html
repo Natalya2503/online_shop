@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% if results %}
+    {% if results.yarn_results %}
+        <h3>Yarn Results</h3>
+        <ul>
+            {% for yarn in results.yarn_results %}
+                <li><a href="{% url "catalog:product_details" yarn.id %}">{{ yarn.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if results.adaptations_results %}
+        <h3>Adaptations Results</h3>
+        <ul>
+            {% for adaptation in results.adaptations_results %}
+                <li><a href="{% url "catalog:adapt_detail" adaptation.id %}">{{ adaptation.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if results.products_results %}
+        <h3>Products Results</h3>
+        <ul>
+            {% for product in results.products_results %}
+                <li><a href="{% url "catalog:product_sample" product.slug %}">{{ product.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if not results.yarn_results and not results.adaptations_results and not results.products_results %}
+        <p>No results found.</p>
+    {% endif %}
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+{% endblock  %}

@@ -86,26 +86,18 @@
  <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item {% if not first_products.has_previous %}disabled{% endif %} ">
-        <a class="page-link" href="{% if first_products.has_previous %}
-         ?page = {{ first_products.previous_page_number}}
-        {% else %}
-        #
-        {% endif %}" tabindex="-1" aria-disabled="true">Назад</a>
+        <a class="page-link" href="{% if first_products.has_previous %}?{% change_params page=first_products.previous_page_number %}{% else %}#   {% endif %}" tabindex="-1" aria-disabled="true">Назад</a>
       </li>
       {% for page  in first_products.paginator.page_range %}
       {% if page >= first_products.number|add:-2 and page <= first_products.number|add:2 %}
       <li class="page-item {% if first_products.number == page %}active{% endif %}">
-        <a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+        <a class="page-link" href="?{% change_params page=page %}">{{ page }}</a></li>
+        </li>
       {% endif %}
       {% endfor %}
-      {% comment %} <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li> {% endcomment %}
+
       <li class="page-item {% if not first_products.has_next %}disabled{% endif %} ">
-        <a class="page-link" href="{% if first_products.has_next %}
-        ?page={{ first_products.next_page_number }}
-        {% else %}
-        #
-        {% endif %}" tabindex="-1" aria-disabled="true">Следующая</a>
+        <a class="page-link" href="{% if first_products.has_next %}?{% change_params page=first_products.next_page_number %}{% else %}# {% endif %}" tabindex="-1" aria-disabled="true">Следующая</a>
       </li>
     </ul>
   </nav>
