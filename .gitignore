@@ -12,3 +12,4 @@ cache/
 db.sqlite3
 media/
 debug.log
+fixtures

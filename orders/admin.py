@@ -28,16 +28,15 @@ class OrderItemAdmin(admin.ModelAdmin):
 class OrderTabulareAdmin(admin.TabularInline):
     model = Order
     fields = (
-        "requires_delivery",
+        
         "status",
-        "payment_on_get",
+       
       
         "created_time",
     )
 
     search_fields = (
-        "requires_delivery",
-        "payment_on_get",
+       
         "is_paid",
         "created_time",
     )
@@ -49,9 +48,9 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "user",
-        "requires_delivery",
+        
         "status",
-        "payment_on_get",
+      
        
         "created_time",
     )
@@ -61,9 +60,9 @@ class OrderAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("created_time",)
     list_filter = (
-        "requires_delivery",
+      
         "status",
-        "payment_on_get",
+       
        
     )
     inlines = (OrderItemTabulareAdmin,)

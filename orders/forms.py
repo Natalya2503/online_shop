@@ -1,4 +1,5 @@
 from django import forms
+from .models import Order
 
 
 class CreateOrderForm(forms.Form):
@@ -30,14 +31,7 @@ class CreateOrderForm(forms.Form):
             }
         )
     )
-    requires_delivery = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('0', False),
-            ('1', True)
-        ],
-        initial=0,
-    )
+ 
     delivery_address = forms.CharField(
         widget=forms.Textarea(
             attrs={
@@ -47,16 +41,10 @@ class CreateOrderForm(forms.Form):
                 'placeholder':'Введите адрес доставки'
             }
         ),
-        required=False,
-    )
-    payment_on_get = forms.ChoiceField(
-        widget=forms.RadioSelect(),
-        choices=[
-            ('0', False),
-            ('1', True)
-        ],
        
     )
+
+  
 
     def clean_phone_number(self):
         data = self.cleaned_data['phone_number']
