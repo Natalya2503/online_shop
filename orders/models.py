@@ -28,8 +28,15 @@ class Order(models.Model):
     def __str__(self):
         return f'Заказ № {self.pk} | Покупатель {self.user.username} {self.user.last_name}'
 
+    @property
+    def total_amount(self):
+        return sum(item.products_price() for item in self.order_items.all())  
+    # @property
+    # def total_amount(self):
+    #     return sum(cart.products_price() for cart in self) 
+    
 class OrderItem(models.Model):
-    order = models.ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name='Заказ')
+    order = models.ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name='Заказ', related_name='order_items')
     products = models.ForeignKey(to=Products, on_delete=models.SET_DEFAULT, default=None,blank=True,  null=True, verbose_name='Аксессуары')
     yarn = models.ForeignKey(to=Yarn, on_delete=models.SET_DEFAULT, default=None,blank=True,  null=True, verbose_name='Пряжа')
     adaptations = models.ForeignKey(to=Adaptations, on_delete=models.SET_DEFAULT, default=None,blank=True, null=True, verbose_name='Приспособления для вязания')

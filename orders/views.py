@@ -60,7 +60,7 @@ def create_order(request):
                             
                          
                         cart_items.delete()
-                        return redirect('user:profile')
+                        return redirect('payment:start_payment', order_id=order.id)
             except Exception as e:
                 form.add_error(None, str(e))        
     else:
