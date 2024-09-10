@@ -16,6 +16,8 @@ urlpatterns = [
      path('adapt_detail/<int:adapt_id>/', views.adapt_detail, name='adapt_detail'),
 
      path('products_catalog/', views.products_catalog, name='products_catalog'),
-     path('product_sample/<slug:product_slug>/', views.product_sample, name='product_sample' )
+     path('product_sample/<slug:product_slug>/', views.product_sample, name='product_sample' ),
+
+    
 
 ]

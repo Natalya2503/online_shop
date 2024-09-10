@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
     
@@ -114,10 +115,27 @@ class Adaptations(models.Model):
         verbose_name_plural = 'Приспособление для вязания'
 
 
+class Favorite(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    yarn = models.ForeignKey(to=Yarn, null=True, blank=True, on_delete=models.CASCADE )
+    product = models.ForeignKey(to=Products, null=True, blank=True, on_delete=models.CASCADE)
+    adaptation = models.ForeignKey(to=Adaptations, null=True, blank=True, on_delete=models.CASCADE)
 
-
-
+    def __str__(self):
+        if self.product:
+            return f'Пользователь {self.user.username} | Товар {self.product.name} '
+        
+        elif self.yarn:
+            return f'Пользователь {self.user.username} | Товар {self.yarn.name} '
+        
+        elif self.adaptation:
+            return f'Пользователь {self.user.username} | Товар {self.adaptation.name} '
+        else:
+            return f'Пользователь {self.user.username} | Нет указанного товара'
       
-
+    class Meta:
+        db_table = 'favorite'
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранное'
 
     

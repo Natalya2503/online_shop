@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import Http404
 # from goods.utils import q_search
 
-from goods.models import Yarn,YarnCategories, Adaptations, Products
+from goods.models import Yarn,YarnCategories, Adaptations, Products, Favorite
 
 
 # --------------------yarn--------------------------------
@@ -185,7 +186,14 @@ def search(request):
         'results': results
     }
     return render(request, 'goods/search.html', context)
+
+
    
+   
+
+
+
+
         
      
 

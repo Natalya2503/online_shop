@@ -147,4 +147,6 @@ LOGOUT_REDIRECT_URL = 'main:index'
 YOOKASSA_SHOP_ID = '436299'
 YOOKASSA_SECRET_KEY = 'test_nCqu7YHjOd2z2Wcjj4y1sUFyIcQZBijxO126l43UiqQ'
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 
