@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import Http404
-# from goods.utils import q_search
 
-from goods.models import Yarn,YarnCategories, Adaptations, Products, Favorite
+
+
+from goods.models import Yarn,YarnCategories, Adaptations, Products
 
 
 # --------------------yarn--------------------------------
@@ -40,19 +40,14 @@ def first_product(request):
 def first_category(request, category_id):
     
     page = request.GET.get('page', 1)
-    # query = request.GET.get('q', None)
-
-    # category = None
+    
     first_products = []
 
-    # if query:
-    #     first_products = q_search(query)
-    # else:
-    #    if category_id:
+   
            
     category = get_object_or_404(YarnCategories, id=category_id)
     subcategories = category.subcategories.all()
-        #  first_products = []
+       
     for subcategory in subcategories:
              first_product = subcategory.products.first()
              if first_product:
@@ -107,11 +102,7 @@ def adapt_detail(request, adapt_id):
 
 def category_adapt(request, cat_id):
     page = request.GET.get('page', 1)
-    #  query = request.GET.get('q', None)
-
-    #  if query:
-    #     adapts = q_search(query)
-    #  else:
+  
     adapts = Adaptations.objects.filter(category__id=cat_id)
     
     paginator = Paginator(adapts, 4)
@@ -128,11 +119,7 @@ def category_adapt(request, cat_id):
 
 def products_catalog(request):
     page = request.GET.get('page', 1)
-    # query = request.GET.get('q')
-    
-    # if query:
-    #     products = q_search(query)
-    # else:
+  
     products = Products.objects.all()
 
     paginator = Paginator(products, 4)

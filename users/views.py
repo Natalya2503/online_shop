@@ -87,30 +87,7 @@ class ProfileUser(LoginRequiredMixin, UpdateView):
         ).order_by('-id')
         return context
 
-# def profile(request):
-#     if request.method == 'POST':
-#         form = ProfileForm(data=request.POST, instance=request.user)
-#         if form.is_valid():
-#             form.save()
-           
-#             return HttpResponseRedirect(reverse('user:profile'))
-#     else:
-#         form = ProfileForm(instance=request.user)
 
-#     # orders = Order.objects.filter(user=request.user).prefetch_related(
-#     #             Prefetch(
-#     #                 "orderitem_set",
-#     #                 queryset=OrderItem.objects.select_related("product"),
-#     #             )
-#     #         ).order_by("-id")
-        
-
-#     context = {
-#         'title': 'Home - Кабинет',
-#         'form': form,
-#         # 'orders': orders,
-#     }
-#     return render(request, 'users/profile.html', context)
     
 
 
